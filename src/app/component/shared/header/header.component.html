@@ -1,0 +1,70 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<mat-toolbar color="primary" style="min-height:75px">
+
+
+  <span class="example-spacer">
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="navigate('chat')"
+    >
+    <span class="mat-h1 enter">Мессенжер</span>
+  </button>
+  </span>
+
+  <span *ngIf="roles.includes('ROLE_ADMIN')" class="example-spacer">
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="navigate('agreement')"
+    >
+    <span class="mat-h1 enter" >Согласование</span>
+  </button>
+  </span>
+
+  <span class="example-spacer">
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="navigate('stats')"
+    >
+    <span class="mat-h1 enter">Статистика</span>
+  </button>
+  </span>
+
+  <span class="example-spacer" *ngIf="roles.includes('ROLE_ADMIN')">
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+          (click)="navigate('students')"
+  >
+    <span class="mat-h1 enter">Студенты</span>
+  </button>
+  </span>
+
+  <span class="example-spacer" *ngIf="roles.includes('ROLE_STUDENT')">
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+          (click)="navigate('tasks')"
+  >
+    <span class="mat-h1 enter">Задания</span>
+  </button>
+  </span>
+
+  <span class="example-spacer">
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="navigate('profile')"
+    >
+    <span class="mat-h1 enter">Профиль</span>
+  </button>
+  </span>
+
+  <span class="example-spacer" *ngIf="roles.includes('ROLE_ADMIN')">
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+            (click)="navigate('module')"
+    >
+    <span class="mat-h1 enter">Модули</span>
+  </button>
+  </span>
+
+
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+          (click)="navigate('login')"
+  >
+    <span>Выход</span>
+  </button>
+  <span class="example-spacer"></span>
+</mat-toolbar>

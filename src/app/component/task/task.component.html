@@ -1,0 +1,101 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<app-header></app-header>
+<div class="row">
+  <div class="col-3">
+
+    <mat-form-field style="width: 100%; margin-top: 11%; margin-left: 10%" appearance="fill">
+      <mat-label>Модуль</mat-label>
+      <mat-select (selectionChange)="selectModule($event)" [(ngModel)]="selectedModule" name="module">
+        <mat-option *ngFor="let module of modules" [value]="module.id">
+          {{module.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%; margin-left: 10%" appearance="fill" *ngIf="tasks.length > 0">
+      <mat-label>Задание</mat-label>
+      <mat-select (selectionChange)="selectTask($event)" [(ngModel)]="selectedTask" name="task">
+        <mat-option *ngFor="let task of tasks" [value]="task.taskDto.id">
+          {{task.taskDto.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="col-6">
+    <form *ngIf="view"
+          style="margin-top: 5%; margin-left: 10%; width: 800px; height: 500px; background: #CADCFE; border-radius: 10px">
+      <div class="col-12" style="padding-top: 3%; padding-left: 3%">
+
+        <span style="font-weight: bolder"> Модуль: </span> {{module?.title}} <br>
+        <span style="font-weight: bolder"> Задание: </span> {{task?.taskDto?.title}} <br>
+        <span style="font-weight: bolder"> Описание: </span> {{task?.taskDto?.description}} <br>
+      </div>
+
+
+      <div class="col-12" *ngIf="task?.solutionDto" style="padding-top: 3%; padding-left: 3%">
+        <div><span style="font-weight: bolder"> Ваш ответ: </span></div>
+        <textarea *ngIf="task.solutionDto.returnFlag === false" readonly value="{{task.solutionDto?.text}}"
+                  style="width: 100%; height: 150px; border-radius: 10px; border: none; outline: none"></textarea>
+        <textarea *ngIf="task.solutionDto.returnFlag === true" value="{{task.solutionDto?.text}}"
+                  style="width: 100%; height: 150px; border-radius: 10px;"></textarea>
+        <div *ngIf="task.solutionDto.files.length === 0">Вы не загрузили ни одного файла</div>
+        <div *ngIf="task.solutionDto.files.length !== 0">
+
+          <div><span style="font-weight: bolder">Загруженные файлы </span>:</div>
+          <div *ngFor="let file of task.solutionDto.files">
+            <a href="{{ file.url }}">{{ file.name }}</a>
+
+          </div>
+
+        </div>
+
+        <div *ngIf="task.solutionDto.status === 'ON_INSPECTION'"><span
+          style="font-weight: bolder">Статус:</span> На проверке
+        </div>
+        <div *ngIf="task.solutionDto.status === 'AGREED'"><span
+          style="font-weight: bolder">Статус:</span> Согласовано
+          ({{task.solutionDto.mark === 1 ? "Зачет" : "Оценка: " + task.solutionDto.mark}})
+        </div>
+        <div *ngIf="task.solutionDto.status === 'NEED_TO_FINALIZE'">Статус: Необходимо доработать</div>
+      </div>
+
+      <div class="col-12" *ngIf="!task?.solutionDto" style="padding-top: 3%; padding-left: 3%">
+        <div><span style="font-weight: bolder"> Ваш ответ: </span></div>
+        <textarea (change)="onDescriptionChange($event)" [value]="text"
+          style="width: 100%; height: 150px; border-radius: 10px; border: none; padding-left: 5px"></textarea>
+
+        <label for="choose" class="btn btn-info">Выбрать файл</label>
+        <input type="file" id="choose" style="display:none" (change)="selectFile($event)">
+        <div><span style="font-weight: bolder">Выбранные файлы </span>:</div>
+        <div style="display: inline-block" *ngFor="let file of fileInfos | async">
+          <a style="margin-right: 5px;" href="{{ file.url }}">{{ file.name }} </a>
+          <mat-icon style="position: relative; padding-top: 5px; margin-top: 2px; margin-right: 35px;" (click)="deleteFile(file.id)">close</mat-icon>
+        </div>
+        <div>
+          <button mat-raised-button color="primary"
+                  style=" margin-left:32%; width: 30%; height:40px;align-self: center; font-size: 15px; margin-bottom: 10px; margin-top: 10px"
+                  (click)="save()">Сохранить решение
+          </button>
+        </div>
+      </div>
+
+      <!--        <textarea value="{{title}}" style="width: 100%; height: 150px"></textarea>-->
+
+      <!--        <label class="btn btn-default">-->
+      <!--          <input type="file" (change)="selectFile($event)"/>-->
+      <!--        </label>-->
+      <!--        <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">-->
+      <!--          Upload-->
+      <!--        </button>-->
+      <!--        <div class="alert alert-light" role="alert">{{ message }}</div>-->
+
+    </form>
+  </div>
+</div>

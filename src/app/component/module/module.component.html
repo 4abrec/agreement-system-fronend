@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<app-header></app-header>
+<button *ngIf="roles.includes('ROLE_ADMIN')" mat-raised-button class="add" (click)="openDialog()">
+  Добавить
+  <mat-icon color="primary">add</mat-icon>
+</button>
+<div *ngIf="roles.includes('ROLE_ADMIN')">
+  <div *ngFor="let module of modules; let i = index" class="container bcontent">
+    <div class="card" style="width: 800px;">
+      <div class="row no-gutters">
+        <div class="col-sm-10">
+          <div class="content">
+            <p class="title">{{module.title}}</p>
+            <!--          <p>Автор: {{task.author.fio}}</p>-->
+            <span style="font-weight: bolder">Количество заданий: </span> {{module.tasks.length}}<br>
+            <span style="font-weight: bolder">Проверяющие: </span> <div class="user" style="display: inline" *ngFor="let user of module.reviewers; let x = index">
+            {{x === module.reviewers.length - 1 ? user.fio : user.fio.concat(', ')}}
+            </div>
+            <br>
+            <span style="font-weight: bolder">Исполняющие: </span> <div class="user" style="display: inline" *ngFor="let user of module.performers; let y = index">
+             {{y === module.performers.length - 1 ? user.fio : user.fio.concat(', ')}}
+          </div>
+
+        </div>
+
+      </div>
+        <div class="col-sm-2">
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <a class="delete" >Удалить</a>
+              </div>
+              <div class="row">
+                <a class="change" (click)="edit(i)">Изменить</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</div>

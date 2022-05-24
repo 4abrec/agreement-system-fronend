@@ -14,6 +14,7 @@ import {AgreementDto} from "../../model/agreementDto";
 import {MatDialog} from "@angular/material/dialog";
 import {RegistrationDialogComponent} from "../dialog/registration-dialog/registration-dialog.component";
 import {AgreementDialogComponent} from "../dialog/agreement-dialog/agreement-dialog.component";
+import {ViewProfileDialogComponent} from "../view-profile-dialog/view-profile-dialog.component";
 
 @Component({
   selector: 'app-agreement',
@@ -162,4 +163,13 @@ export class AgreementComponent implements OnInit {
     })
   }
 
+  viewProfile(fio: string) {
+    console.log(fio);
+    const dialogRef = this.dialog.open(ViewProfileDialogComponent, {
+      width: '45%',
+      panelClass: "myClass",
+      maxHeight: "650px",
+      data: fio
+    });
+  }
 }

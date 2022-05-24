@@ -52,13 +52,13 @@
           <!-- ID Column -->
           <ng-container matColumnDef="username">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Логин</th>
-            <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+            <td mat-cell *matCellDef="let row"> <span style="cursor: pointer" (click)="viewProfile(row.username)">{{row.username}}</span> </td>
           </ng-container>
 
           <!-- Progress Column -->
           <ng-container matColumnDef="fio">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ФИО</th>
-            <td mat-cell *matCellDef="let row"> {{row.fio}} </td>
+            <td mat-cell *matCellDef="let row"> <span style="cursor: pointer" (click)="viewProfile(row.username)">{{row.fio}}</span> </td>
           </ng-container>
 
           <ng-container matColumnDef="group">
@@ -68,13 +68,18 @@
 
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Статус</th>
-            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+            <td mat-cell *matCellDef="let row">
+              <span *ngIf="row.status === 'На проверке'" style="color: #e0b403"> {{row.status}}</span>
+              <span *ngIf="row.status === 'Нужно доработать'" style="color: #e00303"> {{row.status}}</span>
+              <span *ngIf="row.status === 'Согласовано'" style="color: #00a80a"> {{row.status}}</span>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата сдачи</th>
-            <td mat-cell *matCellDef="let row"> <span *ngIf="row.isOverdue === true" style="color: #e00303">{{row.date}}</span>
-              <span *ngIf="row.isOverdue === false">{{row.date}}</span></td>
+            <td mat-cell *matCellDef="let row">
+              <span *ngIf="row.isOverdue === true" style="color: #e00303">{{row.date}}</span>
+              <span *ngIf="row.isOverdue === false" style="color: #00a80a">{{row.date}}</span></td>
           </ng-container>
 
           <ng-container matColumnDef="mark">
@@ -107,6 +112,10 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="container4" *ngIf="!view">
+      <p>Выберите модуль и задание
     </div>
   </div>
 </div>

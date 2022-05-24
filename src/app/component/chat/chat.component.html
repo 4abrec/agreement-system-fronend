@@ -1,2 +1,90 @@
 <app-header></app-header>
-<p>chat works!</p>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+<div class="container">
+  <div class="row clearfix">
+    <div class="col-lg-12">
+      <div class="card chat-app">
+        <div id="plist" class="people-list">
+          <form class="example-form">
+            <mat-form-field style="width: 100%" class="example-full-width" appearance="fill">
+              <mat-label>Поиск</mat-label>
+              <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredUsers | async" [value]="option.fio"
+                            (onSelectionChange)="onSelFunc(option)">
+                  <img *ngIf="option.photoUrl" class="example-option-img" aria-hidden [src]="option.photoUrl"
+                       height="40" width="40">
+                  <img *ngIf="!option.photoUrl" class="example-option-img" aria-hidden src="assets/anon.png" height="40"
+                       width="40">
+
+                  {{option.fio}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+          <ul class="list-unstyled chat-list mt-2 mb-0">
+
+            <li class="clearfix" *ngFor="let user of chatList" (click)="selectChat(user, user.id)" id="{{user.id}}">
+              <img *ngIf="user.photoUrl" height="40" width="40" src="{{user.photoUrl}}" alt="avatar">
+              <img *ngIf="!user.photoUrl" height="40" width="40" src="assets/anon.png" alt="Нен">
+              <div class="about">
+                <div class="name">{{user.fio}}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="chat">
+          <div class="chat-header clearfix">
+            <div class="row">
+              <div class="col-lg-6" *ngIf="selectedUser">
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                  <img *ngIf="selectedUser.photoUrl" (click)="viewProfile(selectedUser.username)" class="photo" src="{{selectedUser.photoUrl}}" alt="avatar">
+                  <img *ngIf="!selectedUser.photoUrl" (click)="viewProfile(selectedUser.username)" class="photo" src="assets/anon.png" alt="Нен">
+
+                </a>
+                <div class="chat-about">
+                  <h6 class="m-b-0">{{selectedUser.fio}}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-history" id="lola" *ngIf="!selectedUser">
+            <div style="margin-top: 200px; margin-left: 270px; font-size: 20px">Выберите собеседника</div>
+          </div>
+
+          <div class="chat-history" id="lol" *ngIf="selectedUser">
+            <ul class="m-b-0" *ngFor="let message of allMessages">
+              <li class="clearfix">
+                <div *ngIf="message.user.username === senderUsername" class="message-data text-right">
+                  <span style="margin-right: 10px"
+                        class="message-data-time">{{formatData(message.message.localDateTime)}}</span>
+                </div>
+                <div *ngIf="message.user.username === senderUsername"
+                     class="message other-message float-right">{{message.message.text}}</div>
+
+                <div *ngIf="message.user.username === recipientUsername" class="message-data">
+                  <span class="message-data-time">{{formatData(message.message.localDateTime)}}</span>
+                </div>
+                <div *ngIf="message.user.username === recipientUsername"
+                     class="message my-message">{{message.message.text}}</div>
+              </li>
+            </ul>
+          </div>
+          <form *ngIf="selectedUser" #sendForm="ngForm" (ngSubmit)="sendMessage(sendForm)" novalidate>
+            <div class="chat-message clearfix">
+              <div class="input-group mb-0">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-send"></i></span>
+                </div>
+                <input type="text" [(ngModel)]="sentMessage" name="message" class="form-control form-group"
+                       placeholder="Введите сообщение...">
+                <input type="submit" hidden/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

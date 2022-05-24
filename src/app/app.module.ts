@@ -38,6 +38,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { TaskComponent } from './component/task/task.component';
 import { AgreementDialogComponent } from './component/dialog/agreement-dialog/agreement-dialog.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { ViewProfileDialogComponent } from './component/view-profile-dialog/view-profile-dialog.component';
 
 
 @NgModule({
@@ -58,37 +60,40 @@ import { AgreementDialogComponent } from './component/dialog/agreement-dialog/ag
     AddModuleDialogComponent,
     EditModuleDialogComponent,
     TaskComponent,
-    AgreementDialogComponent
+    AgreementDialogComponent,
+    ViewProfileDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    FormsModule,
-    MatButtonToggleModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    NgxMatSelectSearchModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSlideToggleModule,
+        MatSelectModule,
+        MatSliderModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatDialogModule,
+        FormsModule,
+        MatButtonToggleModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        NgxMatSelectSearchModule,
+        MatAutocompleteModule
+    ],
   providers: [HttpClient, HttpInterceptorProvider],
   exports: [
     HeaderComponent,

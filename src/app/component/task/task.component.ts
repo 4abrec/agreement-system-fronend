@@ -54,6 +54,8 @@ export class TaskComponent implements OnInit {
   public username: string;
   public text: string = '';
 
+  public updateText: string = '';
+
   constructor(private moduleService: ModuleService, private taskService: TaskService, private tokenService: TokenService) {
   }
 
@@ -82,6 +84,7 @@ export class TaskComponent implements OnInit {
       console.log(this.task);
       this.view = true;
       this.fileInfos = this.taskService.getFiles(this.task.taskDto.id, this.username);
+      this.updateText = this.task.solutionDto.text;
       sub.unsubscribe();
     })
   }
@@ -95,6 +98,24 @@ export class TaskComponent implements OnInit {
     );
   }
 
+  update() {
+    this.taskService.update(this.task.taskDto.id, this.task.solutionDto.id, this.updateText, this.username).subscribe( data =>
+      this.taskService.getTaskWithSolutionById(this.task.taskDto.id).subscribe(data => {
+        this.task = data;
+        this.view = true;
+      })
+    );
+  }
+
+  onTextUpdateChange(event: any) {
+    this.updateText = event.target.value;
+  }
+
+  toDate(date: string) {
+    console.log(date);
+    return new Date(date).toLocaleString();
+  }
+
   deleteFile(id: string) {
     this.taskService.deleteFile(id).subscribe(data => {
       this.fileInfos = this.taskService.getFiles(this.task.taskDto.id, this.username);
@@ -103,6 +124,30 @@ export class TaskComponent implements OnInit {
 
   onDescriptionChange(event: any) {
     this.text = event.target.value;
+  }
+
+  printFailStatus(): string {
+    if (this.task.solutionDto.mark === 7) {
+      return 'Необходимо доработать (незачет)' ;
+    }
+    else if (this.task.solutionDto.mark === 6) {
+      return 'Необходимо доработать (зачет)' ;
+    }
+    else {
+      return 'Необходимо доработать (Оценка: ' + this.task.solutionDto.mark + ' )';
+    }
+  }
+
+  printSuccessStatus(): string {
+    if (this.task.solutionDto.mark === 7) {
+      return 'Согласовано (незачет)' ;
+    }
+    else if (this.task.solutionDto.mark === 6) {
+      return 'Согласовано (зачет)' ;
+    }
+    else {
+      return 'Согласовано (Оценка: ' + this.task.solutionDto.mark + ' )';
+    }
   }
 
 }

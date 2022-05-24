@@ -13,12 +13,12 @@
             <p class="title">{{module.title}}</p>
             <!--          <p>Автор: {{task.author.fio}}</p>-->
             <span style="font-weight: bolder">Количество заданий: </span> {{module.tasks.length}}<br>
-            <span style="font-weight: bolder">Проверяющие: </span> <div class="user" style="display: inline" *ngFor="let user of module.reviewers; let x = index">
-            {{x === module.reviewers.length - 1 ? user.fio : user.fio.concat(', ')}}
+            <span style="font-weight: bolder">Проверяющие: </span> <div class="user"  style="display: inline" *ngFor="let user of module.reviewers; let x = index">
+            <span style="cursor: pointer" (click)="viewProfile(user.username)">{{x === module.reviewers.length - 1 ? user.fio : user.fio.concat(', ')}}</span>
             </div>
             <br>
             <span style="font-weight: bolder">Исполняющие: </span> <div class="user" style="display: inline" *ngFor="let user of module.performers; let y = index">
-             {{y === module.performers.length - 1 ? user.fio : user.fio.concat(', ')}}
+             <span style="cursor: pointer" (click)="viewProfile(user.username)">{{y === module.performers.length - 1 ? user.fio : user.fio.concat(', ')}}</span>
           </div>
 
         </div>

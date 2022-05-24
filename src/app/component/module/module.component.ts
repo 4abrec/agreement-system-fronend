@@ -7,6 +7,7 @@ import {ViewModuleDto} from "../../model/viewModuleDto";
 import {ModuleService} from "../../service/module-service/module.service";
 import {UpdateDialogComponent} from "../dialog/update-dialog/update-dialog.component";
 import {EditModuleDialogComponent} from "../dialog/edit-module-dialog/edit-module-dialog.component";
+import {ViewProfileDialogComponent} from "../view-profile-dialog/view-profile-dialog.component";
 
 @Component({
   selector: 'app-module',
@@ -67,12 +68,21 @@ export class ModuleComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(AddModuleDialogComponent, {
-      width: '45%',
+      width: '20%',
       panelClass: "myClass",
       maxHeight: "650px"
     });
     let sub = dialogRef.afterClosed().subscribe(data => {
       this.getAllModules();
+    });
+  }
+  viewProfile(fio: string) {
+    console.log(fio);
+    const dialogRef = this.dialog.open(ViewProfileDialogComponent, {
+      width: '45%',
+      panelClass: "myClass",
+      maxHeight: "650px",
+      data: fio
     });
   }
 

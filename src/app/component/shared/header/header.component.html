@@ -20,7 +20,7 @@
   </button>
   </span>
 
-  <span class="example-spacer">
+  <span *ngIf="roles.includes('ROLE_STUDENT')" class="example-spacer" >
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
             (click)="navigate('stats')"
     >

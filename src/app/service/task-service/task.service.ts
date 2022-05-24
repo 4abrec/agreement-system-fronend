@@ -40,6 +40,25 @@ export class TaskService {
     return this.http.request(req);
   }
 
+  public uploadPhoto(file: File, username: string): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('image', file);
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("username", username);
+    const req = new HttpRequest('POST', Api.MAIN_URL + '/images/upload', formData, {
+      reportProgress: true,
+      params: queryParams,
+      responseType: 'json'
+    });
+    return this.http.request(req);
+  }
+
+  public getPhoto(username: string): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("username", username);
+    return this.http.get(Api.MAIN_URL + '/images', {params: queryParams});
+  }
+
   getFiles(taskId: number, username: string): Observable<any> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("taskId",taskId);
@@ -57,6 +76,15 @@ export class TaskService {
     queryParams = queryParams.append("username", username);
     queryParams = queryParams.append("text", text);
     return this.http.get(Api.MAIN_URL + '/api/solution/save', {params: queryParams});
+  }
+
+  update(taskId: number, solutionId : number, text: string, username: string) {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("taskId",taskId);
+    queryParams = queryParams.append("solutionId", solutionId);
+    queryParams = queryParams.append("username", username);
+    queryParams = queryParams.append("text", text);
+    return this.http.get(Api.MAIN_URL + '/api/solution/update', {params: queryParams});
   }
 
   getTaskWithAllSolutions(taskId: number): Observable<TaskWithAllSolutionDto[]> {
